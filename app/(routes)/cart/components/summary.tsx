@@ -39,13 +39,49 @@ const Summary = () => {
         setShowOrderForm(true);
     };
 
-    const sendOrder = ( data: { number: string; state: string; fullName: string; phoneNumber: string; street: string; neighborhood: string; postalCode: string; city: string; deliveryType: "Sucursal" | "Envío"; references?: string | undefined; } ) => {
+    const sendOrder = async ( data: { number: string; state: string; fullName: string; phoneNumber: string; street: string; neighborhood: string; postalCode: string; city: string; deliveryType: "Sucursal" | "Envío"; references?: string | undefined; } ) => {
+        
+        var address_data = `
+        Ciudad: ${data.city}
+        Estado: ${data.state}
+        Calle: ${data.street}
+        Numero: ${data.number}
+        Colonia: ${data.neighborhood}
+        CP: ${data.postalCode}
+        Referencia: ${data.postalCode}
+        `
+
+        try {
+            const response = await axios.post(
+              `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+              {
+                productsIds: items.map((item) => item.id),
+                productsAmount: items.map((item) => item.quantity),
+                phone: data.phoneNumber,
+                address: address_data,
+                totalPrice: totalPrice,
+              }
+            );
+        
+            // Verificar si la respuesta es exitosa
+            if (response.status === 200) {
+              // Mostrar mensaje de éxito
+              toast.success("Pedido realizado con éxito");
+            } else {
+              // Mostrar mensaje de error en caso contrario
+              toast.error("Error al procesar el pedido. Inténtalo de nuevo.");
+            }
+          } catch (error) {
+            // Mostrar mensaje de error si ocurre un error en la solicitud
+            toast.error("Error al procesar el pedido. Inténtalo de nuevo.");
+            console.error("Error al procesar el pedido:", error);
+          }
         
     }
 
     const sendToWhatsapp = async (data: { number: string; state: string; fullName: string; phoneNumber: string; street: string; neighborhood: string; postalCode: string; city: string; deliveryType: "Sucursal" | "Envío"; references?: string | undefined; }) => {
         
-        const phoneNumber = '525511946091'; // Número de WhatsApp
+        const phoneNumber = '5563759418'; // Número de WhatsApp
         const whatsappMessage = encodeURIComponent(`Resumen de mi pedido:\n\nArtículos:\n${items.map(item => `${item.name}(${item.quantity})`).join(', ')}\n\nDatos:\nNombre: ${data.fullName}\nEstado: ${data.state}\nCiudad: ${data.city}\nCalle: ${data.street}\nNúmero: ${data.number}\nColonia: ${data.neighborhood}\nCódigo Postal: ${data.postalCode}\nTipo de entrega: ${data.deliveryType}\nReferencias: ${data.references || 'N/A'}`);
 
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
