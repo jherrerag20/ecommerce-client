@@ -24,6 +24,7 @@
     "react-hot-toast": "^2.4.1",
     "stripe": "^14.2.0",
     "tailwind-merge": "^1.14.0",
+    "whatsapp-web.js": "^1.23.0",
     "zod": "^3.22.4",
     "zustand": "^4.4.4"
   },
