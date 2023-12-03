@@ -74,10 +74,14 @@ const ProductCard : React.FC< ProductCardProps > = ({
 
             </div>
             {/* Price */}
-            <div className="flex items-center justify-between">
-
-                <Currency value={data?.price} />
-
+            <div className="flex items-center">
+                {data.wholesalePrice !== data.price ? (
+                <>
+                    <Currency value={data.price} /> - <Currency value={data.wholesalePrice} />
+                </>
+                ) : (
+                <Currency value={data.price} />
+                )}
             </div>
 
         </div>

@@ -19,11 +19,14 @@ export interface Product {
     id: string;
     category: Category;
     name: string;
-    price: string;
+    price: number;
     isFeatured: boolean; 
     size : Size;
     color: Color;
-    images: Image[]
+    images: Image[];
+    wholesalePrice: number;
+    amount_wholesalePrice: number;
+    quantity: number;
     
 }
 
@@ -49,3 +52,4 @@ export interface Color {
     value : string;
 
 }
+

@@ -10,16 +10,21 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@hookform/resolvers": "^3.3.2",
+    "@radix-ui/themes": "^2.0.1",
     "axios": "^1.6.0",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.290.0",
     "next": "14.0.0",
     "query-string": "^8.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.48.2",
     "react-hot-toast": "^2.4.1",
     "stripe": "^14.2.0",
     "tailwind-merge": "^1.14.0",
+    "zod": "^3.22.4",
     "zustand": "^4.4.4"
   },
   "devDependencies": {
