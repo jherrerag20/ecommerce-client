@@ -41,7 +41,13 @@ const Summary = () => {
 
     const sendOrder = async ( data: { number: string; state: string; fullName: string; phoneNumber: string; street: string; neighborhood: string; postalCode: string; city: string; deliveryType: "Sucursal" | "Envío"; references?: string | undefined; } ) => {
         
-        console.log(  items.map((item) => item.id) )
+        if (totalPrice < 1000) {
+
+            toast.error("Estas reduciendo al minimo permitido");
+
+            return;
+
+        }
 
         var address_data = `
         Ciudad: ${data.city}
