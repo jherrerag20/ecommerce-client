@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -60,7 +59,6 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onSubmit }) => {
             // Aquí puedes enviar los datos al servidor o realizar cualquier acción necesaria
             // Por ejemplo, puedes llamar a la función `onSubmit` que pasaste como prop
             onSubmit(data);
-            toast.success("Pedido realizado con éxito");
         } catch (error) {
             toast.error("Algo salió mal");
         } finally {

@@ -41,6 +41,8 @@ const Summary = () => {
 
     const sendOrder = async ( data: { number: string; state: string; fullName: string; phoneNumber: string; street: string; neighborhood: string; postalCode: string; city: string; deliveryType: "Sucursal" | "Envío"; references?: string | undefined; } ) => {
         
+        console.log(  items.map((item) => item.id) )
+
         var address_data = `
         Ciudad: ${data.city}
         Estado: ${data.state}
@@ -55,7 +57,7 @@ const Summary = () => {
             const response = await axios.post(
               `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
               {
-                productsIds: items.map((item) => item.id),
+                productIds: items.map((item) => item.id),
                 productsAmount: items.map((item) => item.quantity),
                 phone: data.phoneNumber,
                 address: address_data,
@@ -65,16 +67,22 @@ const Summary = () => {
         
             // Verificar si la respuesta es exitosa
             if (response.status === 200) {
-              // Mostrar mensaje de éxito
-              toast.success("Pedido realizado con éxito");
+                // Mostrar mensaje de éxito
+                toast.success("Pedido realizado con éxito!");
+                // Esperar 2 segundos antes de enviar a WhatsApp
+                setTimeout(() => {
+                    sendToWhatsapp(data);
+                    removeAll(); // Limpiar el carrito después de realizar el pedido
+                    setShowOrderForm(false); // Ocultar el formulario después de la presentación
+                }, 2000);
             } else {
-              // Mostrar mensaje de error en caso contrario
-              toast.error("Error al procesar el pedido. Inténtalo de nuevo.");
+                // Mostrar mensaje de error en caso contrario
+                toast.error("Error al procesar el pedido. Inténtalo de nuevo.");
             }
           } catch (error) {
-            // Mostrar mensaje de error si ocurre un error en la solicitud
-            toast.error("Error al procesar el pedido. Inténtalo de nuevo.");
-            console.error("Error al procesar el pedido:", error);
+                // Mostrar mensaje de error si ocurre un error en la solicitud
+                toast.error("Error al procesar el pedido. Inténtalo de nuevo.");
+                console.error("Error al procesar el pedido:", error);
           }
         
     }
@@ -109,11 +117,7 @@ const Summary = () => {
             {showOrderForm && (
                 <OrderForm
                 onSubmit={(data) => {
-                    toast.success("Pedido realizado con éxito");
-                    removeAll(); // Limpiar el carrito después de realizar el pedido
-                    setShowOrderForm(false); // Ocultar el formulario después de la presentación
                     sendOrder( data );
-                    sendToWhatsapp( data );
                 }}
                 />
             )}
