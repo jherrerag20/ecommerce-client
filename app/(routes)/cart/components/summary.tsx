@@ -101,7 +101,7 @@ const Summary = () => {
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
 
         // Abrir el enlace de WhatsApp en una nueva ventana
-        window.open(whatsappLink);
+        window.location.href = whatsappLink;
         
     };
 
