@@ -24,6 +24,7 @@ export interface Product {
     size : Size;
     color: Color;
     images: Image[];
+    amount: number;
     wholesalePrice: number;
     amount_wholesalePrice: number;
     quantity: number;

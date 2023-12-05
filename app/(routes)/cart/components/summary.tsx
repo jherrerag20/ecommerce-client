@@ -95,13 +95,14 @@ const Summary = () => {
 
     const sendToWhatsapp = async (data: { number: string; state: string; fullName: string; phoneNumber: string; street: string; neighborhood: string; postalCode: string; city: string; deliveryType: "Sucursal" | "Envío"; references?: string | undefined; }) => {
         
-        const phoneNumber = '5563759418'; // Número de WhatsApp
+        const senderPhoneNumber = '5563759418'; // Número de WhatsApp
         const whatsappMessage = encodeURIComponent(`Resumen de mi pedido:\n\nArtículos:\n${items.map(item => `${item.name}(${item.quantity})`).join(', ')}\n\nDatos:\nNombre: ${data.fullName}\nEstado: ${data.state}\nCiudad: ${data.city}\nCalle: ${data.street}\nNúmero: ${data.number}\nColonia: ${data.neighborhood}\nCódigo Postal: ${data.postalCode}\nTipo de entrega: ${data.deliveryType}\nReferencias: ${data.references || 'N/A'}`);
 
-        const whatsappLink = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+        const whatsappLink = `https://wa.me/${senderPhoneNumber}?text=${whatsappMessage}`;
 
         // Abrir el enlace de WhatsApp en una nueva ventana
         window.location.href = whatsappLink;
+
         
     };
 

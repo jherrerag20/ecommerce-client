@@ -10,6 +10,8 @@ import IconButton from "@/components/ui/icon-button";
 import Currency from "@/components/ui/currency";
 import usePreviewModal from "@/hooks/use-preview-modal";
 import useCart from "@/hooks/use-cart";
+import { Badge } from "./badge";
+import toast from "react-hot-toast";
 
 export interface ProductCardProps {
 
@@ -36,10 +38,18 @@ const ProductCard : React.FC< ProductCardProps > = ({
     }
 
     const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
+
+        if( data.amount <= 0 ){
+            toast.error("Ya no se puede comprar este producto");
+            return;
+        }
+
         event.stopPropagation();
 
         cart.addItem(data);
     }
+
+    
 
     return (  
 
@@ -68,10 +78,15 @@ const ProductCard : React.FC< ProductCardProps > = ({
             </div>
             {/* Description */}
             <div className="font-semibold text-lg">
-
-                <p>{data.name}</p>
-                <p className="text-sm text-gray-500">{data.category?.name}</p>
-
+                <p>
+                    {data.name}
+                </p>
+                {data.amount <= 0 && (
+                        <Badge variant="outline" className="text-red-500">Sold Out</Badge>
+                    )}
+                <p className="text-sm text-gray-500">
+                    {data.category?.name}
+                </p>
             </div>
             {/* Price */}
             <div className="flex items-center">

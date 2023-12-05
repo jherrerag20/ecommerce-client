@@ -21,7 +21,12 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
   };
 
   const onIncrease = () => {
-    cart.updateItem(data.id, data.quantity + 1);
+    if( data.amount > data.quantity ){
+      cart.updateItem(data.id, data.quantity + 1);
+    }
+    else {
+      toast.error("No hay más cantidad de este producto");
+    }
   };
 
   const onDecrease = () => {
