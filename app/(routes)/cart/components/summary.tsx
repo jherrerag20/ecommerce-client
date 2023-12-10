@@ -64,10 +64,12 @@ const Summary = () => {
               `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
               {
                 productIds: items.map((item) => item.id),
+                clientName: data.fullName,
                 productsAmount: items.map((item) => item.quantity),
                 phone: data.phoneNumber,
                 address: address_data,
                 totalPrice: totalPrice,
+                delivery: data.deliveryType
               }
             );
         
